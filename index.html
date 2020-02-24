@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Sketch App</title>
+  </head>
+  <body>
+    <div class="container"></div>
+    <div class="btn-container"></div>
+  </body>
+  <script>
+    // Container
+    const container = document.querySelector('.container');
+    container.style.margin = '20px';
+
+    // Button Container
+    const btnContainer = document.querySelector('.btn-container');
+    btnContainer.style.cssText =
+      'display: flex; justify-content: center; align-items: center;';
+
+    // Button Element
+    const btn = document.createElement('button');
+    btn.textContent = 'Clear Canvas';
+    btn.style.cssText = 'padding: 0.5rem;';
+
+    btnContainer.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+      window.location.reload();
+    });
+
+    // Grid Creation
+    const makeGrid = (rows, cols) => {
+      container.style.setProperty('--grid-rows', rows);
+      container.style.setProperty('--grid-cols', cols);
+
+      for (c = 0; c < rows * cols; c++) {
+        let cell = document.createElement('div');
+
+        // Sketching Functionality
+        cell.onmouseover = function() {
+          onHover();
+        };
+
+        // Changes color of cell
+        function onHover() {
+          let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+          cell.style.backgroundColor = '#' + randomColor;
+        }
+
+        // Styling Cells
+        cell.style.cssText =
+          'padding: 1em; border: 1px solid #ddd; text-align: center;';
+        container.appendChild(cell).setAttribute('class', 'grid-item');
+      }
+    };
+
+    makeGrid(20, 16);
+  </script>
+</html>
